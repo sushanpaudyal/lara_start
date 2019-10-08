@@ -72,6 +72,10 @@ Vue.use(VueProgressBar, {
     height: '3px'
 })
 
+
+let Fire = new Vue();
+window.Fire = Fire;
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
