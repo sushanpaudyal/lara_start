@@ -134,6 +134,7 @@
                 editmode : false,
                 users : {},
                 form: new Form({
+                    id: '',
                     name : '',
                     email: '',
                     password: '',
@@ -145,6 +146,25 @@
         },
         methods: {
             updateUser(){
+                this.$Progress.start();
+                this.form.put('api/user/'+this.form.id)
+                    .then(() => {
+
+                    Toast.fire({
+                    type: 'success',
+                    title: 'User Updated successfully'
+                })
+
+                    $('#addNew').modal('hide')
+
+                Fire.$emit('AfterCreate');
+
+
+
+            })
+                    .catch(() => {
+                    this.$Progress.fail();
+                });
             },
             editModal(user){
                 this.editmode = true;
