@@ -33,7 +33,7 @@
                                 <td>{{ user.created_at | myDate }}</td>
                                 <td>
                                     <a href="#"> <i class="fas fa-edit blue"> </i></a> |
-                                    <a href="#"><i class="fa fa-trash red"></i></a>
+                                    <a href="#" @click="deleteUser(user.id)"><i class="fa fa-trash red"></i></a>
                                 </td>
                             </tr>
 
@@ -140,6 +140,35 @@
             }
         },
         methods: {
+            deleteUser(id){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) =>  {
+                    // send ajax rquest to server
+                    this.form.delete('api/user/'+id).then(() => {
+                    if (result.value) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    Fire.$emit('AfterCreate');
+
+                }
+                }).catch(() => {
+                    swal("Failed!", 'Something Went Wrong', "warning");
+                })
+
+
+            })
+
+            },
             loadUsers(){
                 axios.get("api/user").then(({ data}) => (this.users = data.data));
             },
