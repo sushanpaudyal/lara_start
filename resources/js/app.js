@@ -10,6 +10,8 @@ window.Vue = require('vue');
 
 import moment from 'moment';
 
+import VueProgressBar from 'vue-progressbar';
+
 // vform
 import { Form, HasError, AlertError} from 'vform';
 
@@ -39,6 +41,14 @@ Vue.filter('upText', function(value){
 Vue.filter('myDate', function (value) {
    return moment(value).format('MMMM Do YYYY')
 });
+
+
+
+Vue.use(VueProgressBar, {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '3px'
+})
 
 /**
  * The following block of code may be used to automatically register your
