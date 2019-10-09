@@ -84,25 +84,28 @@
                                             <textarea v-model="form.bio" class="form-control" id="inputExperience" placeholder="Experience"></textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="inputSkills" class="col-sm-2 control-label">Skills</label>
 
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
+
+                                    <div class="form-group">
+                                        <label for="photo" class="col-sm-2 control-label">Profile Photo</label>
+                                        <div class="col-sm-12">
+                                            <input type="file" @change="updateProfile" id="photo" name="photo" class="form-input">
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label for="password" class="col-sm-12 control-label">Passport (leave empty if not changing)</label>
+
+                                        <div class="col-sm-12">
+                                            <input type="password" class="form-control" id="password" placeholder="Passport">
                                         </div>
                                     </div>
+
                                     <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <div class="checkbox">
-                                                <label>
-                                                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Submit</button>
+                                        <div class="col-sm-offset-2 col-sm-12">
+                                            <button type="submit" class="btn btn-success">Update</button>
                                         </div>
                                     </div>
                                 </form>
@@ -149,6 +152,20 @@
                   photo: ''
               })
           }
+        },
+        methods: {
+            updateProfile(e){
+                // console.log('uploading');
+                let file = e.target.files[0];
+                let reader = new FileReader();
+                // console.log(file);
+                reader.onloadend = (file) => {
+                    // console.log('RESULT', reader.result)
+                    this.form.photo = reader.result;
+                }
+                reader.readAsDataURL(file);
+
+            }
         },
         created() {
             axios.get('api/profile').then(({ data}) => (this.form.fill(data)));
