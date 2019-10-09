@@ -155,24 +155,35 @@
         },
         methods: {
             updateInfo(){
+                this.$Progress.start();
                 this.form.put('api/profile/')
                     .then(() => {
-
+                    this.$Progress.finish();
                 })
                     .catch(()  => {
-
+                    this.$Progress.fail();
                 });
             },
             updateProfile(e){
                 // console.log('uploading');
                 let file = e.target.files[0];
                 let reader = new FileReader();
-                // console.log(file);
-                reader.onloadend = (file) => {
-                    // console.log('RESULT', reader.result)
-                    this.form.photo = reader.result;
+                if(file['size'] < 2111775) {
+                    // console.log(file);
+                    reader.onloadend = (file) =>
+                    {
+                        // console.log('RESULT', reader.result)
+                        this.form.photo = reader.result;
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href>Why do I have this issue?</a>'
+                    })
                 }
-                reader.readAsDataURL(file);
 
             }
         },
