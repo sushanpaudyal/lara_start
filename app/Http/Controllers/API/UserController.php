@@ -82,6 +82,9 @@ class UserController extends Controller
              \Image::make($request->photo)->save(public_path('img/profile/').$name);
              $request->merge(['photo'=> $name]);
          }
+         if(!empty($request->password)){
+             $request->merge(['password' => Hash::make($request['password'])]);
+         }
          $user->update($request->all());
     }
     /**
