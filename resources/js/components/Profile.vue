@@ -10,7 +10,7 @@
                         <h5 class="widget-user-desc text-right">Web Designer</h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src="" alt="User Avatar">
+                        <img class="img-circle" :src="getProfilePhoto()" alt="User Avatar">
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -133,7 +133,7 @@
     .widget-user-header{
         background-position: center center;
         background-size: cover;
-        height: 250px;
+        height: 250px !important;
     }
 
     .widget-user .card-footer{
@@ -157,11 +157,15 @@
           }
         },
         methods: {
+            getProfilePhoto(){
+                let photo = (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+                return photo;
+            },
             updateInfo(){
                 this.$Progress.start();
                 this.form.put('api/profile/')
                     .then(() => {
-                    this.$Progress.finish();
+                this.$Progress.finish();
                 })
                     .catch(()  => {
                     this.$Progress.fail();
@@ -192,6 +196,7 @@
         },
         created() {
             axios.get('api/profile').then(({ data}) => (this.form.fill(data)));
+
         }
     }
 </script>
