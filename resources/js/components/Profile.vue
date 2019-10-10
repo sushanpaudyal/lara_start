@@ -99,7 +99,7 @@
                                         <label for="password" class="col-sm-12 control-label">Passport (leave empty if not changing)</label>
 
                                         <div class="col-sm-12">
-                                            <input type="password" class="form-control" id="password" placeholder="Passport">
+                                            <input type="password" v-model="form.password" class="form-control" id="password" placeholder="Passport">
                                         </div>
                                     </div>
 
